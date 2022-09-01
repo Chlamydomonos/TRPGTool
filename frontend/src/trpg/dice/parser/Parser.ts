@@ -131,12 +131,17 @@ export class TokenParser
             {
                 if(opStack.length == 0)
                     opStack.push(token);
-                let stackTop = opStack[ opStack.length - 1 ];
-                if(this.priority(stackTop.type) < this.priority(token.type))
-                    opStack.push(token);
-
-                this.popStacks(numStack, opStack);
-                opStack.push(token);
+                else
+                {
+                    let stackTop = opStack[ opStack.length - 1 ];
+                    if(this.priority(stackTop.type) < this.priority(token.type))
+                        opStack.push(token);
+                    else
+                    {
+                        this.popStacks(numStack, opStack);
+                        opStack.push(token);
+                    }
+                }
             }
         }
         if(numStack.length == 1 && opStack.length == 0)
@@ -186,15 +191,15 @@ export class TokenParser
         }
         else if(childAmount == 2)
         {
-            let lChildToken = numStack.pop();
-            if(lChildToken == null)
-                throw new Error('Broken expression');
-            let lChild = this.buildValueNode(lChildToken);
-
             let rChildToken = numStack.pop();
             if(rChildToken == null)
                 throw new Error('Broken expression');
             let rChild = this.buildValueNode(rChildToken);
+
+            let lChildToken = numStack.pop();
+            if(lChildToken == null)
+                throw new Error('Broken expression');
+            let lChild = this.buildValueNode(lChildToken);
 
             switch(operator.type)
             {
@@ -239,6 +244,34 @@ export class TokenParser
 
     get value()
     {
+        return this.root;
+    }
+}
+
+export default class Parser
+{
+    private readonly root?: TreeNode
+    constructor(input: string)
+    {
+        try
+        {
+            this.root = new TokenParser(new Tokenizer(input)).value;
+        }
+        catch(e)
+        {
+            this.root = undefined;
+        }
+    }
+
+    get success()
+    {
+        return this.root != null;
+    }
+
+    get result()
+    {
+        if(this.root == null)
+            throw new Error('Cannot get a broken parser');
         return this.root;
     }
 }

@@ -84,7 +84,7 @@ export class Dic extends BiOp
         let diceMax = this.rChild.exec();
         let out = 0;
         for(let i = 0; i < times; i++)
-            out += Math.random() * diceMax + 1;
+            out += Math.floor(Math.random() * diceMax + 1);
         return out;
     }
 }
