@@ -1,6 +1,9 @@
+import { type } from 'os';
+import type { TreeNode } from './TreeNode';
 export enum TokenType
 {
     NUM,
+    NOD,
     NEG,
     ADD,
     SUB,
@@ -11,7 +14,9 @@ export enum TokenType
     RBR
 }
 
-type NotNum = Exclude<TokenType, TokenType.NUM>
+type NotNum = Exclude<TokenType, TokenType.NUM | TokenType.NOD>
+
+export type OperatorToken = Exclude<NotNum, TokenType.LBR | TokenType.RBR>
 
 interface INumToken
 {
@@ -19,26 +24,50 @@ interface INumToken
     readonly value: number
 }
 
-interface IOpToken
+interface INodeToken
 {
-    readonly type: NotNum
+    readonly type: TokenType.NOD
+    readonly value: TreeNode
 }
 
-export type Token = INumToken | IOpToken
+type OPT = { readonly type: OperatorToken }
+
+type LBRT = { readonly type: TokenType.LBR }
+type RBRT = { readonly type: TokenType.RBR }
+
+export type ValueToken = INumToken | INodeToken
+export type OriginalToken = INumToken | OPT | LBRT | RBRT
 
 export class NumToken implements INumToken
 {
-    type: TokenType.NUM = TokenType.NUM
+    readonly type: TokenType.NUM = TokenType.NUM
     constructor(
         readonly value: number
     )
     { }
 }
 
-export class OpToken implements IOpToken
+export class NodeToken implements INodeToken
+{
+    readonly type: TokenType.NOD = TokenType.NOD
+    constructor(
+        readonly value: TreeNode
+    )
+    { }
+}
+
+export class OpToken
 {
     constructor(
-        readonly type: NotNum
+        readonly type: OperatorToken
+    )
+    { }
+}
+
+export class BrToken
+{
+    constructor(
+        readonly type: TokenType.LBR | TokenType.RBR
     )
     { }
 }

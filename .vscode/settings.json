@@ -10,5 +10,9 @@
     },
     "editor.linkedEditing": true,
     "javascript.preferences.importModuleSpecifierEnding": "minimal",
-    "typescript.preferences.importModuleSpecifierEnding": "minimal"
+    "typescript.preferences.importModuleSpecifierEnding": "minimal",
+    "cSpell.words": [
+        "LBRT",
+        "RBRT"
+    ]
 }

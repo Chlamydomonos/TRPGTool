@@ -7,7 +7,9 @@
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --environment jsdom",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
+    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "test": "vitest",
+    "test-ui": "vitest --ui"
   },
   "dependencies": {
     "pinia": "^2.0.17",

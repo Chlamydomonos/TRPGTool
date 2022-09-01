@@ -72,7 +72,7 @@ export class Div extends BiOp
 {
     exec(): number
     {
-        return this.lChild.exec() / this.rChild.exec();
+        return Math.floor(this.lChild.exec() / this.rChild.exec());
     }
 }
 
