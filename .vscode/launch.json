@@ -6,7 +6,7 @@
             "type": "node",
             "localRoot": "${workspaceRoot}/frontend",
             "request": "launch",
-            "name": "Debug Current Test File",
+            "name": "调试Vitest文件",
             "autoAttachChildProcesses": true,
             "skipFiles": [
                 "<node_internals>/**",
